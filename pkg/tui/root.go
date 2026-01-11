@@ -22,6 +22,10 @@ const (
 	large
 )
 
+type contextKey string
+
+const clientIPKey contextKey = "client_ip"
+
 type sectionItem struct {
 	id    string
 	title string
@@ -48,8 +52,6 @@ type model struct {
 	viewportHeight  int
 	widthContainer  int
 	heightContainer int
-	widthContent    int
-	heightContent   int
 	size            size
 	theme           theme.Theme
 	showSplash      bool
@@ -68,7 +70,7 @@ func NewModel(
 	command []string,
 ) (tea.Model, error) {
 	ctx := context.Background()
-	ctx = context.WithValue(ctx, "client_ip", clientIP)
+	ctx = context.WithValue(ctx, clientIPKey, clientIP)
 
 	p := portfolio.Default()
 	th := theme.BasicTheme(renderer, nil)
