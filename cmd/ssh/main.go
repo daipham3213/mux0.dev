@@ -75,6 +75,7 @@ func main() {
 	)
 	if err != nil {
 		log.Error("Could not start server", "error", err)
+		return
 	}
 
 	log.Info("Starting SSH server", "port", addr)
@@ -103,7 +104,9 @@ func main() {
 	}()
 
 	<-ctx.Done()
-	srv.Shutdown(ctx)
+	if err := srv.Shutdown(ctx); err != nil && !errors.Is(err, ssh.ErrServerClosed) {
+		log.Error("Could not shutdown server", "error", err)
+	}
 	slog.Info("Shutting down server")
 }
 
