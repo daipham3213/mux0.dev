@@ -14,6 +14,7 @@ COPY index.html .
 RUN if [ -n "$SSH_HOST_KEY" ]; then \
         echo "$SSH_HOST_KEY" > /app/host_key; \
     else \
+        apk add --no-cache openssh && \
         ssh-keygen -t rsa -b 2048 -f /app/host_key -N ""; \
     fi && \
     chmod 600 /app/host_key
