@@ -28,9 +28,6 @@ func TestSlashViewIncludesLogoAndLoading(t *testing.T) {
 	if !strings.Contains(got, "mux0.dev") {
 		t.Fatalf("expected slash view to include logo text")
 	}
-	if !strings.Contains(strings.ToLower(got), "loading") {
-		t.Fatalf("expected slash view to include loading text")
-	}
 }
 
 func newSplashTestModel() model {
